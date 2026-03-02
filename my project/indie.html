@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BU Social — Babcock University</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="stl.css" />
+</head>
+<body>
+
+  <!-- ======================================================
+       AUTH WRAPPER — Hero + Sliding Panel
+  ====================================================== -->
+  <div class="auth-wrapper" id="authWrapper">
+
+    <!-- HERO (always visible behind everything) -->
+    <div class="hero-panel">
+      <div class="floating-posts">
+        <div class="float-card">🎓 Just aced my Java exam! #Compsci #Babcock</div>
+        <div class="float-card">📢 BUSA meeting tomorrow at 3PM. See you there!</div>
+        <div class="float-card">💻 New Horizon lab upgrade is 🔥🔥 @BabcockUniversity</div>
+      </div>
+
+      <!-- Animated background orbs -->
+      <div class="hero-orb orb-1"></div>
+      <div class="hero-orb orb-2"></div>
+      <div class="hero-orb orb-3"></div>
+
+      <div class="hero-content">
+        <div class="brand-logo"><span>B</span></div>
+        <h1>Welcome to<br /><span>BU Social</span></h1>
+        <p class="auth-tagline">Illuminating &amp; Raising Godly Leaders</p>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="hero-stat-num">12K+</span>
+            <span class="hero-stat-label">Students</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-num">40+</span>
+            <span class="hero-stat-label">Departments</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="hero-stat-num">Daily</span>
+            <span class="hero-stat-label">Campus News</span>
+          </div>
+        </div>
+
+        <div class="hero-cta-group">
+          <button class="hero-btn-login" onclick="slideOpenPanel('login')">Sign In</button>
+          <button class="hero-btn-signup" onclick="slideOpenPanel('signup')">Create Account</button>
+        </div>
+      </div>
+
+      <!-- Scroll hint -->
+      <div class="scroll-hint" id="scrollHint">
+        <span>Swipe to explore</span>
+        <div class="scroll-dots">
+          <span class="dot active"></span>
+          <span class="dot"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDING PANEL (slides up over the hero) -->
+    <div class="slide-panel" id="slidePanel">
+      <div class="slide-handle" onclick="slideClosePanel()">
+        <div class="handle-bar"></div>
+        <span class="handle-label">Slide down to go back</span>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div class="slide-form" id="loginForm">
+        <div class="slide-form-logo">
+          <div class="slide-logo-dot"></div>
+          <span>BU Social</span>
+        </div>
+        <p class="auth-form-title">Welcome back 👋</p>
+        <p class="auth-form-sub">Sign in to your Babcock account</p>
+
+        <div class="form-group">
+          <label for="loginEmail">Email Address</label>
+          <input type="email" id="loginEmail" placeholder="yourname@babcock.edu.ng" />
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="••••••••" />
+        </div>
+
+        <button class="btn-primary" onclick="doLogin()">Sign In →</button>
+
+        <div class="auth-switch">
+          Don't have an account? <a onclick="switchSlideForm('signup')">Create one</a>
+        </div>
+      </div>
+
+      <!-- SIGNUP FORM -->
+      <div class="slide-form hidden" id="signupForm">
+        <div class="slide-form-logo">
+          <div class="slide-logo-dot"></div>
+          <span>BU Social</span>
+        </div>
+        <p class="auth-form-title">Join the campus 🌟</p>
+        <p class="auth-form-sub">Create your Babcock Social account</p>
+
+        <div class="form-group">
+          <label for="signupName">Full Name</label>
+          <input type="text" id="signupName" placeholder="Chukwuemeka Obi" />
+        </div>
+        <div class="form-group">
+          <label for="signupMatric">Matric Number</label>
+          <input type="text" id="signupMatric" placeholder="18/0611/SC/00123" />
+        </div>
+        <div class="form-group">
+          <label for="signupEmail">Email Address</label>
+          <input type="email" id="signupEmail" placeholder="yourname@babcock.edu.ng" />
+        </div>
+        <div class="form-group">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" placeholder="Create a strong password" />
+        </div>
+
+        <button class="btn-primary" onclick="doSignup()">Create Account →</button>
+
+        <div class="auth-switch">
+          Already have an account? <a onclick="switchSlideForm('login')">Sign in</a>
+        </div>
+      </div>
+
+    </div><!-- /.slide-panel -->
+  </div><!-- /.auth-wrapper -->
+
+
+  <!-- ======================================================
+       COURSE / DEPARTMENT SELECTION SCREEN
+  ====================================================== -->
+  <div class="course-screen hidden" id="courseScreen">
+    <div class="course-header">
+      <h2>Pick your <span>Department</span> 🎓</h2>
+      <p>We'll personalise your BU Social experience just for you</p>
+    </div>
+
+    <!-- Department cards are injected here by JavaScript -->
+    <div class="dept-grid" id="deptGrid"></div>
+
+    <button class="btn-continue" id="continueBtn" onclick="finishCourseSelection()">
+      Continue to BU Social ✦
+    </button>
+  </div>
+
+
+  <!-- ======================================================
+       MAIN APP
+  ====================================================== -->
+  <div id="app">
+    <div class="app-layout">
+
+      <!-- ── Left Sidebar ── -->
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <div class="sidebar-logo-icon">B</div>
+          <div>
+            <div class="sidebar-logo-text">BU Social</div>
+            <div class="sidebar-logo-sub">Babcock University</div>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <button class="nav-link active" onclick="switchTab('home', this)">
+            <span class="nav-icon">🏠</span>
+            <span>Home</span>
+          </button>
+          <button class="nav-link" onclick="switchTab('explore', this)">
+            <span class="nav-icon">🔍</span>
+            <span>Explore</span>
+          </button>
+          <button class="nav-link" onclick="switchTab('notifications', this)">
+            <span class="nav-icon">🔔</span>
+            <span>Notifications</span>
+            <span class="nav-badge">3</span>
+          </button>
+          <button class="nav-link" onclick="switchTab('messages', this)">
+            <span class="nav-icon">✉️</span>
+            <span>Messages</span>
+            <span class="nav-badge">2</span>
+          </button>
+          <button class="nav-link" onclick="switchTab('bookmarks', this)">
+            <span class="nav-icon">🔖</span>
+            <span>Bookmarks</span>
+          </button>
+          <button class="nav-link" onclick="switchTab('profile', this)">
+            <span class="nav-icon">👤</span>
+            <span>Profile</span>
+          </button>
+        </nav>
+
+        <button class="btn-post" onclick="openModal()">
+          <span class="btn-post-label">+ Post</span>
+        </button>
+
+        <div class="sidebar-user">
+          <div class="sidebar-avatar" id="sidebarAvatar">?</div>
+          <div>
+            <div class="sidebar-user-name" id="sidebarName">Loading…</div>
+            <div class="sidebar-user-handle" id="sidebarHandle">@…</div>
+          </div>
+        </div>
+      </aside>
+
+
+      <!-- ── Main Feed ── -->
+      <main class="main-feed">
+        <div class="feed-header">
+          <div class="feed-title">Home</div>
+          <div class="feed-tabs">
+            <button class="feed-tab active" onclick="switchFeedTab(this)">For You</button>
+            <button class="feed-tab" onclick="switchFeedTab(this)">Following</button>
+            <button class="feed-tab" onclick="switchFeedTab(this)">Babcock</button>
+          </div>
+        </div>
+
+        <!-- Compose Box -->
+        <div class="compose-box">
+          <div class="compose-avatar" id="composeAvatar">?</div>
+          <div class="compose-right">
+            <textarea
+              class="compose-input"
+              id="composeInput"
+              rows="2"
+              placeholder="What's happening on campus?"
+              maxlength="280"
+              oninput="updateCharCount()"
+            ></textarea>
+            <div class="compose-actions">
+              <div class="compose-icons">
+                <button class="compose-icon-btn" title="Image">🖼️</button>
+                <button class="compose-icon-btn" title="GIF">GIF</button>
+                <button class="compose-icon-btn" title="Emoji">😊</button>
+                <button class="compose-icon-btn" title="Location">📍</button>
+              </div>
+              <button class="compose-submit" onclick="submitPost()">Post</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feed posts injected here by JavaScript -->
+        <div id="feedPosts"></div>
+      </main>
+
+
+      <!-- ── Right Sidebar ── -->
+      <aside class="right-sidebar">
+
+        <!-- Search Bar -->
+        <div class="search-bar">
+          <span>🔍</span>
+          <input type="text" placeholder="Search BU Social" />
+        </div>
+
+        <!-- Course-based Recommendations (shown after dept selection) -->
+        <div class="widget-box" id="recoWidget" style="display:none;">
+          <div class="widget-title">✨ For Your Course</div>
+          <!-- Recommendation cards injected by JavaScript -->
+          <div id="recoList"></div>
+        </div>
+
+        <!-- Trending Topics -->
+        <div class="widget-box">
+          <div class="widget-title">Trending at Babcock</div>
+          <div class="trend-item">
+            <div class="trend-cat">Campus · Trending</div>
+            <div class="trend-tag">#BabcockConvocation</div>
+            <div class="trend-count">12.4K posts</div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-cat">Events</div>
+            <div class="trend-tag">#FresherWeek2025</div>
+            <div class="trend-count">8.1K posts</div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-cat">Sports</div>
+            <div class="trend-tag">#BUSAFC</div>
+            <div class="trend-count">5.7K posts</div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-cat">Campus Life</div>
+            <div class="trend-tag">#CampusBites</div>
+            <div class="trend-count">3.2K posts</div>
+          </div>
+          <div class="trend-item">
+            <div class="trend-cat">Academic</div>
+            <div class="trend-tag">#ExamSeason</div>
+            <div class="trend-count">2.8K posts</div>
+          </div>
+        </div>
+
+        <!-- Who to Follow -->
+        <div class="widget-box">
+          <div class="widget-title">Who to Follow</div>
+          <!-- Follow cards injected by JavaScript -->
+          <div id="followList"></div>
+        </div>
+
+        <p class="sidebar-footer">
+          BU Social · Babcock University, Ilishan-Remo<br />
+          <a href="#">Terms</a> · <a href="#">Privacy</a> · <a href="#">Accessibility</a>
+        </p>
+
+      </aside>
+    </div><!-- /.app-layout -->
+  </div><!-- /#app -->
+
+
+  <!-- ======================================================
+       COMPOSE MODAL (full-screen pop-up post composer)
+  ====================================================== -->
+  <div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this) closeModal()">
+    <div class="modal-box">
+      <div class="modal-header">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <span class="char-count" id="modalCharCount">280</span>
+      </div>
+
+      <div class="modal-compose-row">
+        <div class="modal-avatar" id="modalAvatar">?</div>
+        <div style="flex:1">
+          <textarea
+            id="modalTextarea"
+            class="modal-textarea"
+            placeholder="What's happening on campus?"
+            maxlength="280"
+            oninput="updateModalChar()"
+          ></textarea>
+          <div class="modal-actions">
+            <div class="modal-icons">
+              <button class="compose-icon-btn">🖼️</button>
+              <button class="compose-icon-btn">😊</button>
+              <button class="compose-icon-btn">📍</button>
+            </div>
+            <button class="compose-submit" onclick="submitModalPost()">Post</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.modal-box -->
+  </div><!-- /.modal-overlay -->
+
+
+  <!-- Dark / Light Mode Toggle -->
+  <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Toggle dark/light mode">
+    <div class="toggle-thumb" id="toggleThumb">☀️</div>
+  </button>
+
+  <!-- External JavaScript -->
+  <script src="man.js"></script>
+
+</body>
+</html>
