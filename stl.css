@@ -1329,7 +1329,54 @@ body.dark .compose-input {
 body.dark .modal-textarea {
   color: var(--text-primary);
 }
-
+.refresh-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  background: var(--blue-ultra);
+  color: var(--blue-primary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border);
+  transition: background 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.refresh-bar:hover {
+  background: var(--blue-pale);
+}
+.refresh-icon {
+  font-size: 18px;
+  display: inline-block;
+  transition: transform 0.4s ease;
+}
+.refresh-icon.spinning {
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.new-posts-toast {
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  background: var(--blue-primary);
+  color: white;
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  animation: slideDown 0.3s ease;
+}
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to   { transform: translateY(0);     opacity: 1; }
+}
 /* Dark mode: reco icon bg */
 body.dark .reco-icon {
   background: var(--bg);
@@ -1350,4 +1397,5 @@ body.dark .reco-card:hover,
 body.dark .trend-item:hover,
 body.dark .action-btn:hover {
   background: var(--blue-ultra);
+
 }
