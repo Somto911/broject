@@ -215,6 +215,10 @@
       <main class="main-feed">
         <div class="feed-header">
           <div class="feed-title">Home</div>
+          <div class="refresh-bar" id="refreshBar" onclick="refreshFeed()">
+  <span class="refresh-icon" id="refreshIcon">↻</span>
+  <span id="refreshText">Pull to refresh</span>
+</div>
           <div class="feed-tabs">
             <button class="feed-tab active" onclick="switchFeedTab(this)">For You</button>
             <button class="feed-tab" onclick="switchFeedTab(this)">Following</button>
@@ -360,4 +364,5 @@
 </body>
 
 </html>
+
 
