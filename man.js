@@ -149,6 +149,98 @@ const whoToFollow = [
   { initials: '⚽', name: 'BU Sports Club',     handle: '@BabcockSports',     color: '#c62828' },
 ];
 
+// ===== REFRESH FEED =====
+const newPostsPool = [
+  { name: 'BU Student Affairs', handle: 'BUStudentAffairs', initials: 'SA', color: '#1565c0', dept: 'Official', verified: true,  text: '📣 Reminder: Chapel attendance is compulsory this Wednesday. Theme: Excellence in All Things. See you there! #BabcockChapel' },
+  { name: 'Emeka Obi',          handle: 'emeka_obi',       initials: 'EO', color: '#4a148c', dept: 'Mass Communication', verified: false, text: 'Just submitted my final year project! 4 years of hard work in 80 pages 😅📄 God is faithful. #FYP #MassComm #BabcockUniversity' },
+  { name: 'BU Cafeteria',       handle: 'BUCafeteria',     initials: '🍽️', color: '#2e7d32', dept: 'Campus',  verified: true,  text: "Today's special: Jollof rice + chicken + plantain 🍛🔥 Come early before it finishes! Open 7AM–8PM. #CampusBites" },
+  { name: 'Amaka Eze',          handle: 'amaka_eze22',     initials: 'AE', color: '#880e4f', dept: 'Nursing', verified: false, text: 'Night shift study session in the library just hit different 🌙📚 Shoutout to everyone grinding right now. You got this! #NursingLife' },
+  { name: 'BU Sports Club',     handle: 'BabcockSports',   initials: '⚽', color: '#c62828', dept: 'Sports',  verified: true,  text: '🏆 Inter-faculty football final this Saturday 4PM at the sports complex. CS vs Medicine. Who are you rooting for? #BabcockFC' },
+  { name: 'Chidi Nwosu',        handle: 'chidi_nwosu',     initials: 'CN', color: '#006064', dept: 'Computer Science', verified: false, text: 'Hot take: Babcock Wi-Fi is actually decent if you connect between 5–7AM 😂 Certified early bird trick. #BabcockCS #CampusLife' },
+  { name: 'BU Library',         handle: 'BULibrary',       initials: '📖', color: '#1b5e20', dept: 'Academic', verified: true, text: '📚 New journals and textbooks now available on the e-library portal. Log in with your matric number. #BabcockLibrary' },
+];
+
+let poolIndex = 0;
+let pendingNewPosts = [];
+
+function checkForNewPosts() {
+  // Simulate new posts arriving every 30 seconds
+  const post = newPostsPool[poolIndex % newPostsPool.length];
+  poolIndex++;
+  pendingNewPosts.unshift({
+    ...post,
+    id: Date.now() + Math.random(),
+    time: 'just now',
+    likes: Math.floor(Math.random() * 40),
+    retweets: Math.floor(Math.random() * 10),
+    comments: Math.floor(Math.random() * 8),
+    liked: false, retweeted: false, bookmarked: false,
+  });
+  showNewPostsBanner();
+}
+
+function showNewPostsBanner() {
+  // Remove existing banner first
+  const existing = document.getElementById('newPostsBanner');
+  if (existing) existing.remove();
+
+  const count = pendingNewPosts.length;
+  const banner = document.createElement('div');
+  banner.id = 'newPostsBanner';
+  banner.className = 'new-posts-toast';
+  banner.textContent = `↑ ${count} new post${count > 1 ? 's' : ''} — click to load`;
+  banner.onclick = loadNewPosts;
+
+  const feedPosts = document.getElementById('feedPosts');
+  feedPosts.parentElement.insertBefore(banner, feedPosts);
+}
+
+function loadNewPosts() {
+  // Remove banner
+  const banner = document.getElementById('newPostsBanner');
+  if (banner) banner.remove();
+
+  // Prepend new posts to feed and state
+  const container = document.getElementById('feedPosts');
+  pendingNewPosts.forEach((post, i) => {
+    posts.unshift(post);
+    const el = createPostElement(post, i);
+    el.style.animationDelay = `${i * 0.08}s`;
+    container.insertBefore(el, container.firstChild);
+  });
+  pendingNewPosts = [];
+
+  // Scroll to top smoothly
+  container.parentElement.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function refreshFeed() {
+  const icon = document.getElementById('refreshIcon');
+  const text = document.getElementById('refreshText');
+
+  icon.classList.add('spinning');
+  text.textContent = 'Refreshing…';
+
+  setTimeout(() => {
+    icon.classList.remove('spinning');
+    text.textContent = 'Pull to refresh';
+
+    // Load any pending posts, or add a fresh one
+    if (pendingNewPosts.length > 0) {
+      loadNewPosts();
+    } else {
+      checkForNewPosts();
+      loadNewPosts();
+    }
+    showToast('Feed refreshed! ✓');
+  }, 1000);
+}
+
+// Auto-check for new posts every 30 seconds once logged in
+function startNewPostsInterval() {
+  setInterval(checkForNewPosts, 30000);
+}
+
 // ===== AUTH FUNCTIONS =====
 function doLogin() {
   const email = document.getElementById('loginEmail').value.trim();
@@ -268,6 +360,7 @@ function launchApp() {
   renderFeed();
   renderRecommendations();
   renderWhoToFollow();
+   startNewPostsInterval():
 }
 
 // ===== FEED RENDERING =====
@@ -671,4 +764,5 @@ document.addEventListener('DOMContentLoaded', () => {
     const dy = e.changedTouches[0].clientY - touchStartY;
     if (dy > 80 && panel.scrollTop === 0) slideClosePanel();
   }, { passive: true });
+
 });
