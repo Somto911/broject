@@ -213,7 +213,10 @@ function loadNewPosts() {
   // Scroll to top smoothly
   container.parentElement.scrollTo({ top: 0, behavior: 'smooth' });
 }
-
+function mobileNavActive(btn) {
+  document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
 function refreshFeed() {
   const icon = document.getElementById('refreshIcon');
   const text = document.getElementById('refreshText');
