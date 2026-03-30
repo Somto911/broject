@@ -1399,3 +1399,282 @@ body.dark .action-btn:hover {
   background: var(--blue-ultra);
 
 }
+/* ===== MOBILE FIXES ===== */
+@media (max-width: 768px) {
+
+  /* Hide sidebars completely on mobile */
+  .sidebar,
+  .right-sidebar {
+    display: none !important;
+  }
+
+  /* Main feed takes full width */
+  .app-layout {
+    padding: 0;
+  }
+  .main-feed {
+    max-width: 100%;
+    width: 100%;
+    border: none;
+  }
+
+  /* Feed header */
+  .feed-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  .feed-title {
+    font-size: 17px;
+    padding: 12px 16px;
+  }
+  .feed-tab {
+    font-size: 13px;
+    padding: 10px 6px;
+  }
+
+  /* Compose box */
+  .compose-box {
+    padding: 12px 14px;
+  }
+  .compose-avatar {
+    width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
+  .compose-input {
+    font-size: 15px;
+  }
+
+  /* Post cards */
+  .post-card {
+    padding: 12px 14px;
+  }
+  .post-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
+  }
+  .post-name {
+    font-size: 14px;
+  }
+  .post-handle,
+  .post-time {
+    font-size: 12px;
+  }
+  .post-text {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .action-btn {
+    padding: 6px 8px;
+    font-size: 13px;
+  }
+  .action-icon {
+    font-size: 16px;
+  }
+
+  /* Bottom nav bar for mobile */
+  .mobile-nav {
+    display: flex !important;
+  }
+
+  /* Hero panel */
+  .hero-content h1 {
+    font-size: 30px;
+  }
+  .auth-tagline {
+    font-size: 13px;
+  }
+  .hero-stats {
+    padding: 10px 12px;
+    gap: 0;
+    margin-bottom: 28px;
+  }
+  .hero-stat {
+    padding: 0 10px;
+  }
+  .hero-stat-num {
+    font-size: 15px;
+  }
+  .hero-stat-label {
+    font-size: 9px;
+  }
+  .hero-btn-login,
+  .hero-btn-signup {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+  .float-card {
+    font-size: 11px;
+    padding: 8px 12px;
+    max-width: 170px;
+  }
+
+  /* Slide panel full height on mobile */
+  .slide-panel {
+    height: 96vh;
+    border-radius: 20px 20px 0 0;
+  }
+  .slide-form {
+    padding: 20px 18px;
+  }
+  .auth-form-title {
+    font-size: 22px;
+  }
+  .auth-form-sub {
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+  .form-group input {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+  .btn-primary {
+    padding: 13px;
+    font-size: 15px;
+  }
+
+  /* Course selection */
+  .course-header h2 {
+    font-size: 24px;
+  }
+  .dept-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 0 16px;
+  }
+  .dept-card {
+    padding: 14px 12px;
+  }
+  .dept-name {
+    font-size: 12px;
+  }
+  .dept-faculty {
+    font-size: 10px;
+  }
+  .btn-continue {
+    padding: 14px 36px;
+    font-size: 15px;
+  }
+
+  /* Dark mode toggle position */
+  .theme-toggle {
+    top: 14px;
+    right: 14px;
+  }
+
+  /* Modal full screen on mobile */
+  .modal-overlay {
+    align-items: flex-end;
+  }
+  .modal-box {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    padding: 20px 18px 36px;
+  }
+}
+
+/* ===== MOBILE BOTTOM NAV ===== */
+.mobile-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 58px;
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  z-index: 50;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 8px;
+}
+.mobile-nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 10px;
+  transition: background 0.2s;
+  position: relative;
+}
+.mobile-nav-btn:hover {
+  background: var(--blue-ultra);
+}
+.mobile-nav-btn.active .mobile-nav-icon {
+  filter: none;
+  opacity: 1;
+}
+.mobile-nav-icon {
+  font-size: 22px;
+  opacity: 0.5;
+  line-height: 1;
+}
+.mobile-nav-btn.active .mobile-nav-icon {
+  opacity: 1;
+}
+.mobile-nav-label {
+  font-size: 9px;
+  color: var(--text-muted);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+}
+.mobile-nav-btn.active .mobile-nav-label {
+  color: var(--blue-primary);
+}
+.mobile-nav-badge {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  background: var(--blue-primary);
+  color: white;
+  font-size: 9px;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 1px 5px;
+  min-width: 16px;
+  text-align: center;
+}
+
+/* Push feed content above mobile nav */
+@media (max-width: 768px) {
+  #app {
+    padding-bottom: 58px;
+  }
+  /* FAB post button on mobile */
+  .mobile-fab {
+    display: flex !important;
+  }
+}
+
+/* Mobile floating action button */
+.mobile-fab {
+  display: none;
+  position: fixed;
+  bottom: 76px;
+  right: 20px;
+  width: 54px;
+  height: 54px;
+  background: linear-gradient(135deg, var(--blue-primary), var(--blue-bright));
+  border: none;
+  border-radius: 50%;
+  color: white;
+  font-size: 26px;
+  cursor: pointer;
+  z-index: 49;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(21,101,192,0.45);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.mobile-fab:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 28px rgba(21,101,192,0.55);
+}
